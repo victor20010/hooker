@@ -6,42 +6,40 @@
 本项目无意协助任何非法用途，包括但不限于绕过版权保护、修改应用功能或获取未经授权的数据。
 请确保在使用本项目工具时遵守相关法律法规，并仅用于个人学习或研究目的。
 
-### 欢迎使用hooker逆向工作台
+### Добро пожаловать в рабочую станцию реверс-инжиниринга hooker
 
-hooker是一个基于frida实现的逆向工具包。为逆向开发人员提供统一化的脚本包管理方式、通杀脚本、自动化生成hook脚本、内存漫游探测activity和service、frida版JustTrustMe、boringssl unpinning全网app通杀
+hooker - это набор инструментов для реверс-инжиниринга, основанный на frida. Он предоставляет унифицированный способ управления скриптами для разработчиков реверс-инжиниринга, универсальные скрипты, автоматическую генерацию hook-скриптов, обнаружение activity и service в памяти, frida-версию JustTrustMe, boringssl unpinning для всех приложений.
 
-# 最近更新
-#### [windows临时使用hooker js脚本方案](#6-windows临时使用hooker-js脚本方案)
+# Последние обновления
+#### [Временное использование hooker js-скриптов на Windows](#6-windows临时使用hooker-js脚本方案)
 
-#### [frida版just_trust_me 最新支持boringssl unpinning](#11-just_trust_mejs)
+#### [frida-версия just_trust_me с поддержкой boringssl unpinning](#11-just_trust_mejs)
 
-#### [自动化生成frida hook脚本](#j---生成指定类的hook脚本)
+#### [Автоматическая генерация frida hook-скриптов](#j---生成指定类的hook脚本)
 
-#### [内存抓包printAndCloneOkhttp3Request(javaObject)](#9-printAndCloneOkhttp3Request)
+#### [Захват пакетов в памяти с помощью printAndCloneOkhttp3Request(javaObject)](#9-printAndCloneOkhttp3Request)
 
-#### [trace init_proc函数](#13-trace_init_procjs)
+#### [trace init_proc функции](#13-trace_init_procjs)
 
-#### [更底层的方式hookNative函数注册](#15-hook_artmethod_registerjs)
+#### [Более низкоуровневый способ hookNative функции регистрации](#15-hook_artmethod_registerjs)
 
-#### [frida反调试so查找](#16-find_anit_frida_sojs)
+#### [Поиск анти-frida so](#16-find_anit_frida_sojs)
 
-#### [对抗dlsym版本的libmsaoaidsec.so](#18-replace_dlsym_get_pthread_createjs)
+#### [Противодействие dlsym версии libmsaoaidsec.so](#18-replace_dlsym_get_pthread_createjs)
 
-#### [查找boringssl验证函数](#19-find_boringssl_custom_verify_funcjs)
+#### [Поиск функции проверки boringssl](#19-find_boringssl_custom_verify_funcjs)
 
-#### [获取设备指纹信息](#20-get_device_infojs)
+#### [Получение информации о устройстве](#20-get_device_infojs)
 
-#### [apk_shell_scanner查壳脚本](#21-apk_shell_scannerjs)
+#### [apk_shell_scanner для проверки оболочки](#21-apk_shell_scannerjs)
 
-# 锦囊妙计
-* 如何验证一个函数与手机/用户环境无关？拿两台手机登录不同的帐号，如果调用结果一致就是环境无关函数
-*  目前（2025-04-09） libmsaoaidsec.so 采用了动态dlsym加载pthread_create函数，需要hook dlsym打印堆栈找到调用的地方
-* 可以用lsposed去实现动态加载dex把服务启动起来
-* Unidbg有时不好用，不要忽略了手机天然的执行环境
-* MobSF对分析app指纹收集有一定帮助
-* 让QUIC降级最粗暴的方法就是用iptables禁掉所有的UDP请求（除53端口）
-
-
+# Полезные советы
+* Как проверить, является ли функция независимой от среды телефона/пользователя? Возьмите два телефона, войдите в разные аккаунты, если результаты вызова совпадают, значит функция независима от среды.
+* В настоящее время (2025-04-09) libmsaoaidsec.so использует динамическую загрузку dlsym для получения указателя на функцию pthread_create, необходимо hook dlsym и напечатать стек для нахождения места вызова.
+* Можно использовать lsposed для динамической загрузки dex и запуска службы.
+* Unidbg иногда плохо работает, не забывайте о естественной среде выполнения на телефоне.
+* MobSF может помочь в анализе отпечатков приложений.
+* Самый грубый способ понизить уровень QUIC - заблокировать все UDP-запросы (кроме порта 53) с помощью iptables.
 
 目录
 =================

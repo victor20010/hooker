@@ -50,14 +50,14 @@ Java.perform(function() {
                 var viewId = this.getId();
                 console.log("EditTextClz: " + clz);
                 console.log("ViewId: " + viewId);
-                console.log("text: " + v0);
+                console.log("текст: " + v0);
                 var invokeId = Math.random().toString(36).slice( - 8);
         		var executor = this.hashCode();
                 methodInBeat(invokeId, startTime, 'android.widget.EditText.setText()', executor);
             }
         };
     }
-    //EditText的getText继承自TextView
+    //getText EditText наследуется от TextView
     if (textViewClz.getText) {
         var getTextFunc = textViewClz.getText.overload();
         getTextFunc.implementation = function() {
@@ -68,7 +68,7 @@ Java.perform(function() {
                 var viewId = this.getId();
                 console.log("EditTextClz: " + clz);
                 console.log("ViewId: " + viewId);
-                console.log("Text: " + Java.cast(editable, charSequenceClz));
+                console.log("Текст: " + Java.cast(editable, charSequenceClz));
                 var invokeId = Math.random().toString(36).slice( - 8);
         		var executor = this.hashCode();
         		methodInBeat(invokeId, startTime, 'android.widget.EditText.getText()', executor);
@@ -76,7 +76,7 @@ Java.perform(function() {
             return editable;
         };
     }
-    //AppCompatEditText 有自定义的getText所以单独hook
+    //AppCompatEditText имеет настраиваемый getText, поэтому hook отдельно
     if (classExists("androidx.appcompat.widget.AppCompatEditText")) {
         var appCompatEditTextClz = Java.use("androidx.appcompat.widget.AppCompatEditText");
         var appCompatEditTextClzGetTextFunc = appCompatEditTextClz.getText.overload();
@@ -87,7 +87,7 @@ Java.perform(function() {
             var viewId = this.getId();
             console.log("EditTextClz: " + clz);
             console.log("ViewId: " + viewId);
-            console.log("Text: " + Java.cast(editable, charSequenceClz));
+            console.log("Текст: " + Java.cast(editable, charSequenceClz));
             var invokeId = Math.random().toString(36).slice( - 8);
         	var executor = this.hashCode();
         	methodInBeat(invokeId, startTime, 'androidx.appcompat.widget.AppCompatEditText.getText()', executor);

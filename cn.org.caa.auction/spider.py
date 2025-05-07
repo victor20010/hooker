@@ -80,9 +80,9 @@ def restartApp(packageName, mobileIP, adb):
     
 appPackageName = "com.tencent.mm"
 mainActivity = "com.tencent.mm.ui.LauncherUI"
-#手机ip
+#IP телефона
 mobileIP = "192.168.0.102"
-#重启周期 秒
+#Период перезапуска в секундах
 runningTime = 3600
 
 adb="adb"

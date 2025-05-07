@@ -27,13 +27,13 @@ function classExists(className) {
 
 function getClassName(obj) {
     if (obj.getClass) {
-        return obj.getClass().getName();
+        return obj.getName();
     }
     var javaObject = Java.use("java.lang.Object");
     return Java.cast(obj, javaObject).getClass().getName();
 }
 
-//str1是否包含str2，str2可用正则表示
+//str1 содержит str2, str2 может быть регулярным выражением
 function contains(str1, str2) {
     var reg = RegExp(eval("/"+str2+"/"));
     if(str1 && str1.match && str1.match(reg)){
@@ -43,19 +43,19 @@ function contains(str1, str2) {
     }
 };
 
-//创建ArrayList对象用这个方法就好了
+//создать объект ArrayList, просто используйте этот метод
 function newArrayList() {
     var ArrayListClz = Java.use('java.util.ArrayList');
     return ArrayListClz.$new();
 }
 
-//创建HashSet对象用这个方法就好了
+//создать объект HashSet, просто используйте этот метод
 function newHashSet() {
     var HashSetClz = Java.use('java.util.HashSet');
     return HashSetClz.$new();
 }
 
-//创建HashMap对象用这个方法就好了
+//создать объект HashMap, просто используйте этот метод
 function newHashMap() {
     var HashMapClz = Java.use('java.util.HashMap');
     return HashMapClz.$new();
@@ -104,37 +104,37 @@ function sleep(time) {
 
 
 
-// 当Okhttp3Request对象是post的时候，你读取body会消耗一次，使后面的请求不成功，这时候我们就要克隆一个新的Request
+// Когда объект Okhttp3Request является post, чтение тела приведет к его потреблению один раз, что приведет к неудаче последующих запросов. В этом случае нам нужно клонировать новый запрос
 function printAndCloneOkhttp3Request(ok3ReqObj) {
     var logObj = {};
-    // 类名
+    // Имя класса
     logObj.class = ok3ReqObj.getClass().getName();
     // URL
     logObj.url = ok3ReqObj.url().toString();
-    // 方法
+    // Метод
     logObj.method = ok3ReqObj.method();
-    // 请求头
+    // Заголовки запроса
     var headers = {};
     var headerList = ok3ReqObj.headers();
     for (var i = 0; i < headerList.size(); i++) {
         headers[headerList.name(i)] = headerList.value(i);
     }
     logObj.headers = headers;
-    // Tag
+    // Тег
     var tag = ok3ReqObj.tag();
     logObj.tag = tag ? tag.toString() : null;
-    // 请求体克隆
+    // Клонирование тела запроса
     var body = ok3ReqObj.body();
     var newRequest = null;
     var bodyContent = null;
     if (body) {
         var BufferClz = Java.use("okio.Buffer");
         var buffer = BufferClz.$new();
-        body.writeTo(buffer);  // 第一次读取到流
-        bodyContent = buffer.readUtf8();  // 保存内容
+        body.writeTo(buffer);  // Первое чтение потока
+        bodyContent = buffer.readUtf8();  // Сохранение содержимого
         var RequestBodyClz = Java.use("okhttp3.RequestBody");
         var newBody = RequestBodyClz.create(body.contentType(), bodyContent);
-        // 克隆新请求体
+        // Клонирование нового тела запроса
         newRequest = ok3ReqObj.newBuilder()
             .method(ok3ReqObj.method(), newBody)
             .build();
@@ -142,25 +142,25 @@ function printAndCloneOkhttp3Request(ok3ReqObj) {
         newRequest = ok3ReqObj.newBuilder().build();
     }
     logObj.body = bodyContent;
-    // 打印 JSON 格式
+    // Печать в формате JSON
     console.log(JSON.stringify(logObj, null, 4));
     return newRequest;
 }
 
-// Response读取body会消耗一次，使后面的程序读取不成功，这时候我们就要克隆一个新的Response
+// Чтение тела ответа приведет к его потреблению один раз, что приведет к неудаче последующих программ. В этом случае нам нужно клонировать новый ответ
 function printAndCloneOkhttp3Response(ok3ResObj) {
-    // 构建 JSON 数据
+    // Создание данных JSON
     var result = {
         request: {},
         response: {}
     };
 
-    // 获取 Request 信息
+    // Получение информации о запросе
     var request = ok3ResObj.request();
     result.request.url = request.url().toString();
     result.request.method = request.method();
 
-    // 请求头
+    // Заголовки запроса
     var reqHeaders = request.headers();
     var reqHeadersJson = {};
     for (var i = 0; i < reqHeaders.size(); i++) {
@@ -168,7 +168,7 @@ function printAndCloneOkhttp3Response(ok3ResObj) {
     }
     result.request.headers = reqHeadersJson;
 
-    // 获取 Response 信息
+    // Получение информации о ответе
     result.response.statusCode = ok3ResObj.code();
 
     var resHeaders = ok3ResObj.headers();
@@ -178,27 +178,27 @@ function printAndCloneOkhttp3Response(ok3ResObj) {
     }
     result.response.headers = resHeadersJson;
     var newOk3ResObj = ok3ResObj;
-    // 读取 Response Body
+    // Чтение тела ответа
     var body = ok3ResObj.body();
     if (body) {
         try {
             var bodyStr = body.string();
             result.response.body = bodyStr;
 
-            // 重新封装 Body 防止内容被消耗
+            // Повторное создание тела для предотвращения потребления содержимого
             var newBody = Java.use("okhttp3.ResponseBody").create(body.contentType(), Java.use("java.lang.String").$new(bodyStr));
             newOk3ResObj = ok3ResObj.newBuilder().body(newBody).build();
         } catch (e) {
-            result.response.body = "[!] Failed to read body: " + e;
+            result.response.body = "[!] Не удалось прочитать тело: " + e;
         }
     } else {
-        result.response.body = "[!] No body";
+        result.response.body = "[!] Нет тела";
     }
 
-    // 将 JSON 数据格式化输出
+    // Форматированный вывод данных JSON
     console.log(JSON.stringify(result, null, 4));
     return newOk3ResObj
 }
 
-// loadXRadarDexfile if you want to ued func fastTojson or storeObjectAndLog  
+// loadXRadarDexfile если вы хотите использовать функции fastTojson или storeObjectAndLog  
 //loadXRadarDexfile();

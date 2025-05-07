@@ -25,7 +25,7 @@ Java.perform(function() {
             var viewId = this.getId();
             console.log("TextViewClz: " + clz);
             console.log("ViewId: " + viewId);
-            console.log("Text:" + v0);
+            console.log("Текст:" + v0);
             setTextFunc.call(this, v0);
             var invokeId = Math.random().toString(36).slice( - 8);
             var executor = this.hashCode();
@@ -40,7 +40,7 @@ Java.perform(function() {
             var editable = getTextFunc.call(this);
             console.log("TextViewClz: " + clz);
             console.log("ViewId: " + viewId);
-            console.log("Text: " + editable.toString());
+            console.log("Текст: " + editable.toString());
             var invokeId = Math.random().toString(36).slice( - 8);
             var executor = this.hashCode();
             methodInBeat(invokeId, startTime, "android.widget.TextView.getText()", executor);

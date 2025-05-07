@@ -32,7 +32,7 @@ function getClassName(obj) {
     return Java.cast(obj, javaObject).getClass().getName();
 }
 
-//str1是否包含str2，str2可用正则表示
+//str1 содержит str2, str2 может быть регулярным выражением
 function contains(str1, str2) {
     var reg = RegExp(eval("/" + str2 + "/"));
     if (str1 && str1.match && str1.match(reg)) {
@@ -42,19 +42,19 @@ function contains(str1, str2) {
     }
 };
 
-//创建ArrayList对象用这个方法就好了
+//создать объект ArrayList, просто используйте этот метод
 function newArrayList() {
     var ArrayListClz = Java.use('java.util.ArrayList');
     return ArrayListClz.$new();
 }
 
-//创建HashSet对象用这个方法就好了
+//создать объект HashSet, просто используйте этот метод
 function newHashSet() {
     var HashSetClz = Java.use('java.util.HashSet');
     return HashSetClz.$new();
 }
 
-//创建HashMap对象用这个方法就好了
+//создать объект HashMap, просто используйте этот метод
 function newHashMap() {
     var HashMapClz = Java.use('java.util.HashMap');
     return HashMapClz.$new();
@@ -64,7 +64,7 @@ function log(str) {
     console.log(str);
 };
 
-//虽然我们习惯用fastjson一行将对象转成json字符串，但是Android Library里面自带了一个gson可以做到 只是sdk没有暴露出来，很多人不知道。在frida中所有代码都是透明的，你随便调......
+//Хотя мы привыкли использовать fastjson для преобразования объекта в строку json за одну строку, библиотека Android имеет встроенный gson, который может это сделать. Просто sdk не раскрывает его, и многие люди не знают об этом. В frida весь код прозрачен, вы можете вызывать его как угодно......
 function toJson(javaObject) {
     var gsonClz = Java.use("com.google.gson.Gson");
     var toJsonMethod = gsonClz.toJson.overload("java.lang.Object");

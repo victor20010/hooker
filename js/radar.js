@@ -7,7 +7,7 @@ function discoverClass(className) {
     return radarClassResult;
 };
 
-//查找所有加载的子类
+//Найти все загруженные подклассы
 function findOffspringsClasses(parentClassName) {
     var radarResults = new Array();
     if (!classExists(parentClassName)) {
@@ -51,7 +51,7 @@ function findSOLibrary(libname) {
     return report;
 };
 
-//根据类名或正则表达式查找
+//Поиск по имени класса или регулярному выражению
 function findClasses(classNameRegex) {
     var radarResults = new Array();
     if (classExists(classNameRegex)) {
@@ -133,9 +133,9 @@ function generateFridaMethodOverload(clzVarName, radarMethod) {
     }
     overloadJs += "};";
     return overloadJs;
-}
+};
 
-//生成构造方法的overload
+//Генерация перегрузки метода конструктора
 function generateFridaConstructorMethodOverload(clzVarName, constructorMethod) {
     var overloadJs = "";
     if (!constructorMethod.isLocal.value) {
@@ -202,7 +202,7 @@ function generateMethodHookJs(radarClassResult, methodName) {
         }
     }
 
-    //是否需要hook构造方法
+    //Нужно ли перехватывать конструктор
     if (hookConstructorMethod) {
         hasHook = true;
         var constructorMethods = radarClassResult.constructorMethods.value;
