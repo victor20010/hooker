@@ -33,7 +33,7 @@ function object2Json(objectId) {
 	if (obj) {
 		log(fastTojson(obj));
 	}else{
-		log("Not found this object.");
+		log("Объект не найден.");
 	}
 }
 
@@ -43,7 +43,7 @@ function object2String(objectId) {
 	if (obj) {
 		log(obj.toString());
 	}else{
-		log("Not found this object.");
+		log("Объект не найден.");
 	}
 }
 
@@ -58,4 +58,3 @@ function getField(javaObject, fieldName) {
     var X = Java.use("gz.util.X");
     return X.getField(javaObject, fieldName);
 };
-

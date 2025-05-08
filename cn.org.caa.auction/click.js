@@ -40,7 +40,7 @@ Java.perform(function() {
         var ret = android_view_View_clz_method_performClick_u6ef.call(this);
         var clz = this.getClass().getName();
         var viewId = this.getId();
-        //console.log("ViewText: " + Java.cast(this, textViewClz).getText());
+        //console.log("Текст представления: " + Java.cast(this, textViewClz).getText());
         console.log("ViewClz: " + clz);
         console.log("ViewId: " + viewId);
         methodInBeat(invokeId, startTime, 'public boolean android.view.View.performClick()', executor);

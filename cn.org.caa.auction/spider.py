@@ -16,9 +16,9 @@ Cyan = 6
 White = 7
  
 def red(string):
-    return withColor(string, Red+30) # Red
+    return withColor(string, Red+30) # Красный
 def yellow(string):
-    return withColor(string, Yellow+30) # Yellow
+    return withColor(string, Yellow+30) # Желтый
 
 warn = red
 info = yellow
@@ -50,13 +50,13 @@ def attach(packageName, hookerDriverFridaServer, runningTime):
         rdev = frida.get_device_manager().add_remote_device(hookerDriverFridaServer)
         online_session = rdev.attach(packageName)
         if online_session == None:
-            warn("attaching fail to " + packageName)
+            warn("не удалось подключиться к " + packageName)
         online_script = online_session.create_script(jscode)
         online_script.on('message', on_message)
         online_script.load()
         for i in range(1, runningTime):
             if i % 2 == 0:
-                online_script.exports.log(mobileIP + " spider has running been " + str(i) + " seconds.");
+                online_script.exports.log(mobileIP + " spider работает уже " + str(i) + " секунд.");
             time.sleep(1)
     except Exception:
         hasException = True
@@ -92,6 +92,5 @@ while True:
     print("inject spider.js");
     print(jscode);
     attach(appPackageName, mobileIP + ":27042", runningTime)
-    print("restarting spider.", appPackageName, mainActivity, mobileIP, runningTime)
-    
+    print("перезапуск spider.", appPackageName, mainActivity, mobileIP, runningTime)
     

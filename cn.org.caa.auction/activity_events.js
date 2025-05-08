@@ -33,7 +33,7 @@ function getClassName(obj) {
     return Java.cast(obj, javaObject).getClass().getName();
 }
 
-//str1是否包含str2，str2可用正则表示
+//str1 содержит str2, str2 может быть регулярным выражением
 function contains(str1, str2) {
     var reg = RegExp(eval("/"+str2+"/"));
     if(str1 && str1.match && str1.match(reg)){
